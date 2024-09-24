@@ -40,15 +40,8 @@ int main() {
 				continue;
 			}
 			if (ny < 0 || ny >= 8 || nx < 0 || nx >= 8)continue;
-			if (map[now.t][ny][nx] == '#') {
-				//cout << ny << nx << nt << "벽";
-					continue;
-			}
-			if (d == 0) q.push({ ny,nx,nt });
-			else {
-				//cout << "qin" << ny << nx << nt << "\n";
-				q.push({ ny,nx,nt });
-			}
+			if (map[now.t][ny][nx] == '#') continue;
+			 q.push({ ny,nx,nt });
 		}
 	}
 	cout << ans;
