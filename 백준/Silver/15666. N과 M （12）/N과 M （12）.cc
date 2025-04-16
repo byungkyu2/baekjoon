@@ -1,39 +1,32 @@
 #include <iostream>
-#include <vector>
 #include <algorithm>
 using namespace std;
-int N, M;
-int arr[10001];
-vector<int> inp;
-vector<int> v;
-void func(int now, int k) {
-	if (now == M) {
-		for (int i = 0; i < M; i++) {
-			cout << inp[v[i]] << " ";
+int n, m;
+int ans[8];
+int nums[8];
+int used[8] = { 0 };
+void dfs(int cnt) {
+	if (cnt == m) {
+		for (int i = 0; i < m; i++) {
+			cout << ans[i] << " ";
 		}
 		cout << "\n";
 		return;
 	}
-	for (int i = k; i < inp.size(); i++) {
-		v.push_back(i);
-		func(now + 1, i);
-		v.pop_back();
+	for (int i = 0; i < n; i++) {
+		if (cnt > 0 && ans[cnt - 1] > nums[i])continue;
+		if (i > 0 && nums[i - 1] == nums[i] && used[i - 1] == 0)continue;
+		used[i] = 1;
+		ans[cnt] = nums[i];
+		dfs(cnt + 1);
+		used[i] = 0;
 	}
 }
-
 int main() {
-	cin >> N >> M;
-	for (int i = 0; i < N; i++) {
-		int num;
-		cin >> num;
-		arr[num] = 1;
+	cin >> n >> m;
+	for (int i = 0; i < n; i++) {
+		cin >> nums[i];
 	}
-	for (int i = 1; i < 10001; i++) {
-		if (arr[i] == 1)inp.push_back(i);
-	}
-	for (int i = 0; i < inp.size(); i++) {
-		v.push_back(i);
-		func(1,i);
-		v.pop_back();
-	}
+	sort(nums, nums + n);
+	dfs(0);
 }
